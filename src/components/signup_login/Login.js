@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+// src/components/signup_login/Login.js
+
+import React, {useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import SharedPage from './SharedPage'; 
 import './SignupLogin.css';
 import { loginUser } from '../../services/apiService';
 
 
-const Login = () => {
+const Login = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [termsConditions, setTermsConditions] = useState(false);
@@ -14,34 +15,20 @@ const Login = () => {
     const [userType, setUserType] = useState('patient');
     const navigate = useNavigate();
 
-
-    // ✅ Updated handleSubmit to actually call backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const userData = await loginUser(email, password, userType);
 
-      // Example: store auth data if needed
-      localStorage.setItem('token', userData.token);
-      localStorage.setItem('user', JSON.stringify(userData));
+ 
+      onLogin(userData);
 
-      // ✅ Logic after login
-      //if (userType === 'patient') {
-       // if (userData.children && userData.children.length > 0) {
-       //  navigate('/dashboard/patient');
-     /*    } else {
-          navigate(`/signup/${userType}`); // Or a register-child page
-        }
-      } else if (userType === 'doctor') {
+      if (userData.role === 'PATIENT') {
+        navigate('/dashboard/patient');
+      } else if (userData.role === 'DOCTOR') {
         navigate('/dashboard/doctor');
-      //}*/
-   if (userData.role === 'PATIENT') {
-    navigate('/dashboard/patient');
-} else if (userData.role === 'DOCTOR') {
-    navigate('/dashboard/doctor');
-}
-
+      }
 
     } catch (error) {
       console.error(error);
@@ -51,6 +38,7 @@ const Login = () => {
 
     return (
         <SharedPage title={`Welcome To Kiddo Health ${userType === 'doctor' ? 'Doctor' : ''}`}>
+          
             <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">
                     <label htmlFor="email">Email:</label>

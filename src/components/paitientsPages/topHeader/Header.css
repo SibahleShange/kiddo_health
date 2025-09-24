@@ -209,6 +209,22 @@
   color: #ff4444 !important;
   font-weight: 500;
 }
+/* Add this to Header.css */
+.logout-button {
+  background: none;
+  border: none;
+  color: #333; /* Or whatever your link color is */
+  padding: 10px 20px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-family: inherit; /* Inherit font from the rest of the menu */
+  font-size: 1em; /* Inherit font size */
+}
+
+.logout-button:hover {
+  background-color: #f0f0f0; /* Same hover effect as other items */
+}
 
 @keyframes fadeIn {
   from {

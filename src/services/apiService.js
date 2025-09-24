@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:8080/kiddohealth';
 // Register parent
 export const registerParent = async (parentData) => {
   try {
-    // Assuming your backend has an endpoint like POST /parent/create (adjust if different)
+   
     const response = await axios.post(`${API_URL}/parent/create`, parentData);
     return response.data; // should include saved parent with an ID
   } catch (error) {
@@ -60,6 +60,23 @@ export const loginUser = async (email, password, role) => {
   }
 };
 
+// Upload a profile picture for a child
+export const uploadChildProfilePicture = async (childId, file) => {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await axios.post(`${API_URL}/child/${childId}/upload-picture`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data; 
+  } catch (error) {
+    console.error('Error uploading profile picture:', error.response || error.message);
+    throw error;
+  }
+};
 
 //doctor registration
 export const registerDoctor = async (doctorData) => {

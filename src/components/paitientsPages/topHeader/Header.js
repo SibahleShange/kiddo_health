@@ -1,13 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faClock, faMapMarkerAlt, faUserCircle, faSearch, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { 
+
+    faPhone,
+    faClock, 
+    faMapMarkerAlt,
+    faUserCircle, 
+    faSearch, 
+    faCaretDown 
+  } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../images/logo.png';
 import './Header.css';
 
-const Header = ({ children }) => {
+const Header = ({ children, onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -65,7 +72,12 @@ const Header = ({ children }) => {
                   <li><a href="#">My Account</a></li>
                   <li><a href="#">Settings</a></li>
                   <li><a href="#">Notifications</a></li>
-                  <li><a href="#">Log Out</a></li>
+                  {/* 2. Make the Log Out button functional */}
+                    <li>
+                        <button onClick={onLogout} className="logout-button">
+                            Log Out
+                        </button>
+                    </li>
                 </ul>
               )}
             </li>
